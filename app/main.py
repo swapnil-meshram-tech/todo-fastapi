@@ -2,14 +2,14 @@ from fastapi import FastAPI, status
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 
-from app.exceptions.handlers import (
+from app.core.handlers import (
     http_exception_handler,
     validation_exception_handler,
     global_exception_handler,
 )
 
 from app.routers.todo import todo_router
-from app.schemas.responses import MessageResponse
+from app.core.responses import MessageResponse
 
 
 app = FastAPI()

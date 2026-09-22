@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.responses import MessageResponse
+from app.core.responses import MessageResponse
 
 todo_router = APIRouter(prefix="/todo", tags=["Todo"])
 

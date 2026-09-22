@@ -1,7 +1,7 @@
 from fastapi import Request
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
-from app.responses.errors import error_response
+from app.core.errors import error_response
 
 
 async def http_exception_handler(request: Request, exe: StarletteHTTPException):

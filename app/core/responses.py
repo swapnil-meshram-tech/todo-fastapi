@@ -9,5 +9,5 @@ class MessageResponse[T](BaseModel):
 
 class ErrorResponse[T](BaseModel):
     status: str = "error"
-    message: str
+    detail: str
     errors: T | None = None

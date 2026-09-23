@@ -1,6 +1,6 @@
 from fastapi.responses import JSONResponse
 from typing import Any
-from app.core.responses import ErrorResponse
+from app.schemas.responses import ErrorResponse
 
 
 # def error_response(status_code: int, detail: str, errors: Any | None = None):

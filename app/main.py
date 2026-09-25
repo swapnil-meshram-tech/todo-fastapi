@@ -17,6 +17,12 @@ app = FastAPI()
 
 setup_logging()
 
+
+app.add_exception_handler(StarletteHTTPException, http_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(Exception, global_exception_handler)
+
+
 app.include_router(todo_router)
 
 
@@ -28,8 +34,3 @@ app.include_router(todo_router)
 )
 async def home():
     return MessageResponse(message="Server is running")
-
-
-app.add_exception_handler(StarletteHTTPException, http_exception_handler)
-app.add_exception_handler(RequestValidationError, validation_exception_handler)
-app.add_exception_handler(Exception, global_exception_handler)

@@ -2,6 +2,8 @@ from fastapi import FastAPI, status
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 
+from app.core.config import settings
+
 from app.core.logging import setup_logging
 from app.core.handlers import (
     http_exception_handler,
@@ -33,4 +35,4 @@ app.include_router(todo_router)
     status_code=status.HTTP_200_OK,
 )
 async def home():
-    return MessageResponse(message="Server is running")
+    return MessageResponse(message=f"{settings.APP_NAME} server is running")

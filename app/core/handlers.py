@@ -8,7 +8,7 @@ from app.core.errors import error_response
 logger = logging.getLogger(__name__)
 
 
-async def app_error_handler(status_code, detail):
+def app_error_handler(status_code: int, detail: str):
     return error_response(status_code, detail)
 
 

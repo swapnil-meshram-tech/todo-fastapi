@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Literal
 
 
 class MessageResponse[T](BaseModel):
@@ -8,6 +9,6 @@ class MessageResponse[T](BaseModel):
 
 
 class ErrorResponse[T](BaseModel):
-    status: str = "error"
+    status: Literal["error"] = "error"
     detail: str
     errors: T | None = None

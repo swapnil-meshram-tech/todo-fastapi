@@ -26,7 +26,7 @@ def init_db():
     conn = sqlite3.connect(DB_PATH)
     conn.execute("PRAGMA journal_mode = WAL")
     conn.execute("""
-        CREATE TABLE Todo (
+        CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY,
             title TEXT NOT NULL UNIQUE,
             status TEXT NOT NULL DEFAULT 'Pending' 

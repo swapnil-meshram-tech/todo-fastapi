@@ -11,7 +11,7 @@ def get_db():
     conn = sqlite3.connect(DB_PATH, timeout=30.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode = WAL")
-    conn.execute("PRAGMA synchronous = ")
+    conn.execute("PRAGMA synchronous = NORMAL")
     conn.execute("PRAGMA busy_timeout = 5000")
     conn.execute("PRAGMA foreign_keys = ON")
 
@@ -23,7 +23,16 @@ def get_db():
 
 def init_db():
     Path(settings.DATABASE_URL).parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH, timeout=30.0)
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("PRAGMA journal_mode = WAL")
+    conn.execute("""
+        CREATE TABLE Todo (
+            id INTEGER PRIMARY KEY,
+            title TEXT NOT NULL UNIQUE,
+            status TEXT NOT NULL DEFAULT 'Pending' 
+                CHECK(status IN ('Pending', 'In Progress', 'Completed'))
+        );
+    """)
 
     conn.commit()
     conn.close()

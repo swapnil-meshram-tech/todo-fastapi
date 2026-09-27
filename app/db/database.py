@@ -28,7 +28,7 @@ def init_db():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS todos (
             id INTEGER PRIMARY KEY,
-            title TEXT NOT NULL UNIQUE,
+            title TEXT NOT NULL,
             status TEXT NOT NULL DEFAULT 'Pending' 
                 CHECK(status IN ('Pending', 'In Progress', 'Completed'))
         );

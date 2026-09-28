@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, status
+from fastapi import FastAPI
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 
@@ -40,7 +40,7 @@ app.include_router(todo_router)
     "/",
     response_model=MessageResponse,
     response_model_exclude_none=True,
-    status_code=status.HTTP_200_OK,
+    # status_code=status.HTTP_200_OK,
 )
 async def home():
     return MessageResponse(message="server is running")

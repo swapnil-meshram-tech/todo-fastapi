@@ -1,23 +1,22 @@
-# from dotenv import load_dotenv
-# import os
-
-# load_dotenv()
-
-
-# class Settings:
-#     DATABASE_URL = os.getenv("DATABASE_URL")
-
-# settings = Settings()
-
-
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
-    APP_NAME: str = "Todo"
+    APP_NAME: str = "todo"
     DATABASE_URL: str = "sqlite:///db/test.db"
+
+    @field_validator("DATABASE_URL")
+    @classmethod
+    def validate_db_url(cls, v: str) -> str:
+        if not v.startswith(("sqlite:///", "postgresql://", "mysql://")):
+            raise ValueError(f"Invalid Database URL : {v}")
+
+        return v
 
 
 settings = Settings()

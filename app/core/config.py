@@ -1,4 +1,4 @@
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     )
 
     APP_NAME: str = "todo"
-    DATABASE_URL: str = "sqlite:///db/test.db"
+    DATABASE_URL: str = Field(default="sqlite:///db/test.db", validate_default=True)
 
     @field_validator("DATABASE_URL")
     @classmethod

@@ -5,5 +5,5 @@ todo_router = APIRouter(prefix="/todo", tags=["Todo"])
 
 
 @todo_router.get("/")
-async def get_todos():
+def get_todos():
     return MessageResponse(message="get", data="data")

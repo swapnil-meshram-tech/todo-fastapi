@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     )
 
     APP_NAME: str = "todo"
-    DATABASE_URL: str = Field(default="sqlite:///db/test.db", validate_default=True)
+    DATABASE_URL: str = "sqlite:///db/test.db"
 
     @field_validator("DATABASE_URL")
     @classmethod

@@ -1,11 +1,14 @@
 import sqlite3
+from collections.abc import Iterator
 from pathlib import Path
+from urllib.parse import urlparse
+
 from app.core.config import settings
 
-DB_PATH = Path(settings.DATABASE_URL.replace("sqlite:///", ""))
+DB_PATH = Path(urlparse(settings.DATABASE_URL).path.lstrip("/"))
 
 
-def get_db():
+def get_db() -> Iterator[sqlite3.Connection]:
     conn = sqlite3.connect(DB_PATH, timeout=30.0)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA synchronous = NORMAL")
@@ -20,7 +23,7 @@ def get_db():
         conn.close()
 
 
-def init_db():
+def init_db() -> None:
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB_PATH, timeout=30.0)
     conn.execute("PRAGMA journal_mode = WAL")

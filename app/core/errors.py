@@ -1,17 +1,10 @@
 from fastapi.responses import JSONResponse
-from typing import Any
-from app.schemas.responses import ErrorResponse
 
 
-# def error_response(status_code: int, detail: str, errors: Any | None = None):
-#     content = {"status": "error", "detail": detail}
-#     if errors is not None:
-#         content["errors"] = errors
-#     return JSONResponse(status_code=status_code, content=content)
-
-
-def error_response(status_code: int, detail: str, errors: Any | None = None):
-    body = ErrorResponse(detail=detail, errors=errors)
-    return JSONResponse(
-        status_code=status_code, content=body.model_dump(exclude_none=True)
-    )
+def _error_response(
+    status_code: int, detail: str, errors: list[dict] | None = None
+) -> JSONResponse:
+    body: dict = {"detail": detail}
+    if errors is not None:
+        body["errors"] = errors
+    return JSONResponse(status_code=status_code, content=body)

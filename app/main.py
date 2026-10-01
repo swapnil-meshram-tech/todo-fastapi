@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from app.db.database import init_db
 from app.core.config import settings
 from app.core.logging import setup_logging
-from app.core.handlers import (
+from app.core.exceptions.handlers import (
     http_exception_handler,
     validation_exception_handler,
     global_exception_handler,

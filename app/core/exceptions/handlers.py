@@ -2,7 +2,7 @@ from fastapi import Request
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 import logging
-from app.core.errors import _error_response
+from app.core.exceptions.responses import _error_response
 
 
 logger = logging.getLogger(__name__)

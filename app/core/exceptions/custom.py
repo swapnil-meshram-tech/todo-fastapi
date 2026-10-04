@@ -1,1 +1,6 @@
-# check and verify this with real best industry production practice
+# check and verify this with real modern industry best production practice
+
+
+class AppError:
+    def __init__(self):
+        pass

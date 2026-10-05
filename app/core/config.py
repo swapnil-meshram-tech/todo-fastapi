@@ -9,13 +9,15 @@ class Settings(BaseSettings):
     )
 
     app_name: str = "todo"
+    debug: bool = False
     database_url: str
 
     @field_validator("database_url")
     @classmethod
     def validate_db_url(cls, v: str) -> str:
-        if not v.startswith(("sqlite:///", "postgresql://", "mysql://")):
-            raise ValueError(f"Invalid Database URL : {v}")
+        if not v.startswith(("sqlite:///", "postgresql+asyncpg://", "mysql://")):
+            raise ValueError("Invalid Database URL scheme")
+            # raise ValueError(f"Invalid Database URL: {v}")
 
         return v
 

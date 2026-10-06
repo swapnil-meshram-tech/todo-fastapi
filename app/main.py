@@ -1,21 +1,21 @@
-from loguru import logger
-from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.exceptions import RequestValidationError
+from loguru import logger
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.gzip import GZipMiddleware
 
-from app.core.exceptions.custom import AppError
 from app.core.config import settings
-from app.core.logging import setup_logging
+from app.core.exceptions.custom import AppError
 from app.core.exceptions.handlers import (
     app_error_handler,
+    global_exception_handler,
     http_exception_handler,
     validation_exception_handler,
-    global_exception_handler,
 )
+from app.core.logging import setup_logging
 from app.db.database import init_db
 from app.routers.health import health_router
 from app.routers.todo import todo_router

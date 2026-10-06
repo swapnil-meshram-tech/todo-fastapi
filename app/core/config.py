@@ -10,7 +10,19 @@ class Settings(BaseSettings):
 
     app_name: str = "todo"
     debug: bool = False
+
+    log_level: str = "INFO"
+    json_logs: bool = False
+
     database_url: str
+
+    @field_validator("log_level")
+    @classmethod
+    def validate_log_level(cls, v: str) -> str:
+        v = v.upper()
+        if v not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
+            raise ValueError(f"Invalid log level: {v}")
+        return v
 
     @field_validator("database_url")
     @classmethod
@@ -18,7 +30,6 @@ class Settings(BaseSettings):
         if not v.startswith(("sqlite:///", "postgresql+asyncpg://", "mysql://")):
             raise ValueError("Invalid Database URL scheme")
             # raise ValueError(f"Invalid Database URL: {v}")
-
         return v
 
 

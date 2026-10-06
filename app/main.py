@@ -1,4 +1,4 @@
-import logging
+from loguru import logger
 from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
 
@@ -21,8 +21,7 @@ from app.routers.health import health_router
 from app.routers.todo import todo_router
 
 
-setup_logging()
-logger = logging.getLogger(__name__)
+setup_logging(level=settings.log_level, json_logs=settings.json_logs)
 
 
 @asynccontextmanager
@@ -43,7 +42,7 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
         docs_url="/docs" if settings.debug else None,
         redoc_url="/redoc" if settings.debug else None,
-        openapi_url="/openai.json" if settings.debug else None,
+        openapi_url="/openapi.json" if settings.debug else None,
     )
 
     app.add_middleware(GZipMiddleware, minimum_size=1000)

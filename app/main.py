@@ -26,8 +26,13 @@ setup_logging(level=settings.log_level, json_logs=settings.json_logs)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
-    await init_db()
+    init_db()
     logger.info("Database initialized")
+    # logger.debug("DEBUG - cyan")
+    # logger.info("INFO - green")
+    # logger.warning("WARNING - yellow")
+    # logger.error("ERROR - red")
+
     yield
 
     # await close_db()
@@ -37,7 +42,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
 def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.app_name,
-        version="1.0.0",
+        version=settings.app_version,
         debug=settings.debug,
         lifespan=lifespan,
         docs_url="/docs" if settings.debug else None,

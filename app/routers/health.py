@@ -19,6 +19,6 @@ async def readiness_check():
     except TimeoutError:
         # logger.warning("Readiness check timeout.")
         return JSONResponse({"status": "not_ready"}, status_code=503)
-    except Exception as e:
-        # logger.warning("Readiness check failed: %s", e)
-        return JSONResponse({"status": "not_ready"}, status_code=503)
+    # except Exception as e:
+    #     # logger.warning("Readiness check failed: %s", e)
+    #     return JSONResponse({"status": "not_ready"}, status_code=503)

@@ -2,5 +2,6 @@
     "cSpell.words": [
         "jsonable",
         "redoc"
-    ]
+    ],
+    "files.autoSave": "afterDelay"
 }

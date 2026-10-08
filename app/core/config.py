@@ -8,9 +8,11 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8", extra="ignore", case_sensitive=False
     )
 
+    app_name: str
+    app_version: str
+    
     database_url: str
 
-    app_name: str = "todo"
     debug: bool = False
 
     log_level: str = "INFO"

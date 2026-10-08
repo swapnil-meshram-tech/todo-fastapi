@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 
 from app.core.config import settings
 
-DB_PATH = Path(urlparse(settings.DATABASE_URL).path.lstrip("/"))
+DB_PATH = Path(urlparse(settings.database_url).path.lstrip("/"))
 
 
 def get_db() -> Iterator[sqlite3.Connection]:

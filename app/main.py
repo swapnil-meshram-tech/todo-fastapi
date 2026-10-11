@@ -10,7 +10,7 @@ from starlette.middleware.gzip import GZipMiddleware
 from app.core.config import settings
 from app.core.exceptions.custom import AppError
 from app.core.exceptions.handlers import (
-    app_error_handler,
+    app_exception_handler,
     global_exception_handler,
     http_exception_handler,
     validation_exception_handler,
@@ -52,7 +52,7 @@ def create_app() -> FastAPI:
 
     app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-    app.add_exception_handler(AppError, app_error_handler)
+    app.add_exception_handler(AppError, app_exception_handler)
     app.add_exception_handler(StarletteHTTPException, http_exception_handler)
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(Exception, global_exception_handler)

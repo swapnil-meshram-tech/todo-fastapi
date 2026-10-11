@@ -10,11 +10,9 @@ class Settings(BaseSettings):
 
     app_name: str
     app_version: str
-    
     database_url: str
 
     debug: bool = False
-
     log_level: str = "INFO"
     json_logs: bool = False
 

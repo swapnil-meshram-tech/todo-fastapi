@@ -1,7 +1,6 @@
 from fastapi import Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
 from loguru import logger
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -9,7 +8,7 @@ from app.core.exceptions.custom import AppError
 from app.core.exceptions.responses import _error_response
 
 
-async def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
+async def app_exception_handler(request: Request, exc: AppError):
     logger.warning(
         "{} {} - AppError: {} [{}]",
         request.method,
@@ -21,9 +20,7 @@ async def app_error_handler(request: Request, exc: AppError) -> JSONResponse:
     return _error_response(exc.status_code, exc.detail)
 
 
-async def http_exception_handler(
-    request: Request, exc: StarletteHTTPException
-) -> JSONResponse:
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     logger.warning(
         "{} {} - HttpError: {} [{}]",
         request.method,
@@ -32,23 +29,22 @@ async def http_exception_handler(
         exc.status_code,
     )
 
-    return _error_response(exc.status_code, exc.detail, exc.headers)
+    return _error_response(exc.status_code, exc.detail, headers=exc.headers)
 
 
-async def validation_exception_handler(
-    request: Request, exc: RequestValidationError
-) -> JSONResponse:
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
     json_errors = jsonable_encoder(exc.errors())
     logger.warning(
-        "{} {} - ValidationError: Input validation failed [422]",
+        "{} {} - ValidationError: {} [422]",
         request.method,
         request.url.path,
+        json_errors,
     )
 
     return _error_response(422, "Input validation failed", errors=json_errors)
 
 
-async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+async def global_exception_handler(request: Request, exc: Exception):
     logger.exception(
         "{} {} - ServerError: {} [500]", request.method, request.url.path, exc
     )

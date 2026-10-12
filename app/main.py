@@ -33,10 +33,13 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     # logger.warning("WARNING - yellow")
     # logger.error("ERROR - red")
 
-    yield
+    try:
+        yield
 
-    # await close_db()
-    # logger.info("Database connection closed")
+    finally:
+        pass
+        # await close_db()
+        # logger.info("Database connection closed")
 
 
 def create_app() -> FastAPI:
@@ -61,8 +64,8 @@ def create_app() -> FastAPI:
     app.include_router(todo_router, prefix="/api/v1")
 
     @app.get("/")
-    async def home():
-        return {"message": "server is running"}
+    async def root() -> dict[str, str]:
+        return {"message": "Server is running"}
 
     return app
 

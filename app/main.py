@@ -1,9 +1,5 @@
-from collections.abc import AsyncGenerator
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from loguru import logger
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.gzip import GZipMiddleware
 
@@ -15,31 +11,13 @@ from app.core.exceptions.handlers import (
     http_exception_handler,
     validation_exception_handler,
 )
+from app.core.lifespan import lifespan
 from app.core.logging import setup_logging
-from app.db.database import init_db
 from app.routers.health import health_router
 from app.routers.todo import todo_router
 
 
 setup_logging(level=settings.log_level, json_logs=settings.json_logs)
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
-    init_db()
-    logger.info("Database initialized")
-    # logger.debug("DEBUG - cyan")
-    # logger.info("INFO - green")
-    # logger.warning("WARNING - yellow")
-    # logger.error("ERROR - red")
-
-    try:
-        yield
-
-    finally:
-        pass
-        # await close_db()
-        # logger.info("Database connection closed")
 
 
 def create_app() -> FastAPI:
@@ -63,7 +41,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router)
     app.include_router(todo_router, prefix="/api/v1")
 
-    @app.get("/")
+    @app.get("/", include_in_schema=False)
     async def root() -> dict[str, str]:
         return {"message": "Server is running"}
 

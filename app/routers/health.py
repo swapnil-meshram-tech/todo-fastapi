@@ -13,11 +13,10 @@ async def liveness_check() -> dict[str, str]:
 
 @health_router.get("/health/ready", include_in_schema=False)
 async def readiness_check() -> JSONResponse:
-
     try:
         # await asyncio.wait_for(check_db(), timeout=2)
         pass
-    except Exception as e:  # noqa
+    except Exception:
         logger.exception("Readiness check failed")
         return JSONResponse({"status": "not_ready"}, status_code=503)
 

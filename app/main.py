@@ -16,7 +16,6 @@ from app.core.logging import setup_logging
 from app.routers.health import health_router
 from app.routers.todo import todo_router
 
-
 setup_logging(level=settings.log_level, json_logs=settings.json_logs)
 
 
@@ -39,7 +38,7 @@ def create_app() -> FastAPI:
     app.add_exception_handler(Exception, global_exception_handler)
 
     app.include_router(health_router)
-    app.include_router(todo_router, prefix="/api/v1")
+    # app.include_router(todo_router, prefix="/api/v1")
 
     @app.get("/", include_in_schema=False)
     async def root() -> dict[str, str]:

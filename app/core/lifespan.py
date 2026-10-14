@@ -8,15 +8,10 @@ from app.db.database import init_db
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
-    # logger.debug("DEBUG - cyan")
-    # logger.info("INFO - green")
-    # logger.warning("WARNING - yellow")
-    # logger.error("ERROR - red")
-
     try:
+        # await init_db()
         init_db()
         yield
-
     finally:
         pass
         # await close_db()

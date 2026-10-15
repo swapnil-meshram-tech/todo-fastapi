@@ -16,6 +16,7 @@ def setup_logging(level: str, json_logs: bool):
             diagnose=False,
             enqueue=True,
         )
+        
     else:
         logger.add(
             sys.stderr,

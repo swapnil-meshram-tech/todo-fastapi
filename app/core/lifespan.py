@@ -12,6 +12,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
         # await init_db()
         init_db()
         yield
+
     finally:
         pass
         # await close_db()

@@ -34,6 +34,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
 
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     json_errors = jsonable_encoder(exc.errors())
+
     logger.warning(
         "{} {} - ValidationError: {} [422]",
         request.method,
@@ -45,8 +46,8 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.exception(
-        "{} {} - ServerError: {} [500]", request.method, request.url.path, exc
+    logger.opt(exception=exc).error(
+        "{} {} - ServerError [500]", request.method, request.url.path
     )
 
     return _error_response(500, "Internal server error")

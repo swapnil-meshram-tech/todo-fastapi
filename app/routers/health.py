@@ -16,6 +16,7 @@ async def readiness_check() -> JSONResponse:
     try:
         # await asyncio.wait_for(check_db(), timeout=2)
         pass
+
     except Exception:
         logger.exception("Readiness check failed")
         return JSONResponse({"status": "not_ready"}, status_code=503)
